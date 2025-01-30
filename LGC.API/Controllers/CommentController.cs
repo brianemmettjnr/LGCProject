@@ -24,13 +24,12 @@ namespace LGC.API.Controllers
                 return BadRequest("Comment data is null.");
             }
 
-            var result = _commentService.CreateCommentAsync(commentDto);
-            if (await result != null)
+            var result = await _commentService.CreateCommentAsync(commentDto);
+            if (result == null)
             {
-                return Ok("Comment created successfully.");
+                return StatusCode(500, "A problem happened while handling your request.");
             }
-
-            return StatusCode(500, "A problem happened while handling your request.");
+            return CreatedAtAction(nameof(GetComment), new { id = result.Id }, result);
         }
 
         [HttpGet("{id}")]

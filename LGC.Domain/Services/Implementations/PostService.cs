@@ -27,12 +27,12 @@ namespace LGC.Domain.Services.Implementations
             var post = _mapper.Map<PostDto, Post>(postDto);
             _context.Posts.Add(post);
             await _context.SaveChangesAsync();
-            return post;
+            return await _context.Posts.Include(x => x.User).FirstOrDefaultAsync(p => p.Id == post.Id) ?? throw new Exception("Post not found");
         }
 
         public Task<Post?> GetPostByIdAsync(int id)
         {
-            return _context.Posts.Where(p => p.Id == id).FirstOrDefaultAsync();
+            return _context.Posts.Include(x => x.User).Include(x => x.Comments).Where(p => p.Id == id).FirstOrDefaultAsync();
         }
 
         public Task<List<Post>> GetPostsAsync()
