@@ -11,10 +11,9 @@ namespace LGC.Data.Models
         public int Id { get; set; }
         [MaxLength(100)]
         public required string Text { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.Now.ToUniversalTime();
         public int UserId { get; set; }
         public int PostId { get; set; }
         public virtual required User User { get; set; }
-        public virtual required Post Post { get; set; }
     }
 }

@@ -7,10 +7,8 @@ using LGC.Data.Models;
 
 namespace LGC.Domain.Services.Interfaces
 {
-    public interface IPostService
+    public interface IUserService
     {
-        Task<Post> CreatePostAsync(PostDto postDto);
-        Task<Post?> GetPostByIdAsync(int id);
-        Task<List<Post>> GetPostsAsync();
+        Task<User> CreateUserAsync(UserDto userDto);
     }
 }

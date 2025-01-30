@@ -13,7 +13,7 @@ namespace LGC.Data.Models
         public required string Title { get; set; }
         [MaxLength(100)]
         public required string Text { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.Now.ToUniversalTime();
         public required int UserId { get; set; }
         public virtual required User User { get; set; }
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();

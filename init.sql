@@ -1,0 +1,3 @@
+CREATE DATABASE lgc;
+\c lgc;
+CREATE SCHEMA IF NOT EXISTS "lgc";

@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LGC.Data.Models
+namespace LGC.Data.DTOs
 {
-    public class User
+    public class UserDto
     {
-        public int Id { get; set; }
         public required string Username { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now.ToUniversalTime();
     }
 }

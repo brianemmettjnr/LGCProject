@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LGC.Data.DTOs;
 using LGC.Domain.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,14 +11,44 @@ namespace LGC.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CommentController : ControllerBase
+    public class CommentController(ICommentService commentService) : ControllerBase
 
     {
-        private readonly ICommentService _commentService;
-        public CommentController(ICommentService commentService)
+        private readonly ICommentService _commentService = commentService;
+
+        [HttpPost]
+        public async Task<IActionResult> CreateComment([FromBody] CommentDto commentDto)
         {
-            _commentService = commentService;
+            if (commentDto == null)
+            {
+                return BadRequest("Comment data is null.");
+            }
+
+            var result = _commentService.CreateCommentAsync(commentDto);
+            if (await result != null)
+            {
+                return Ok("Comment created successfully.");
+            }
+
+            return StatusCode(500, "A problem happened while handling your request.");
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetComment(int id)
+        {
+            var comment = await _commentService.GetCommentByIdAsync(id);
+            if (comment == null)
+            {
+                return NotFound("Comment not found.");
+            }
+            return Ok(comment);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ListComments()
+        {
+            var comments = await _commentService.GetAllCommentsAsync();
+            return Ok(comments);
+        }
     }
 }
