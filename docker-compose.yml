@@ -24,8 +24,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-      geodb:
-        condition: service_healthy
     environment:
       - ConnectionStrings__Postgres=Host=db;Database=postgres;Port=5432;Username=postgres;Password=postgres
 
