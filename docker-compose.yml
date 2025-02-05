@@ -1,19 +1,13 @@
 services:
-  # frontend:
-  #   build:
-  #     context: ./LGC.Frontend
-  #     args:
-  #       VITE_API_URL: http://localhost # Set this to match the backend service
-  #       VITE_CLERK_PUBLISHABLE_KEY: pk_test_dGhhbmtmdWwtYm9iY2F0LTAuY2xlcmsuYWNjb3VudHMuZGV2JA
-  #   ports:
-  #     - "80:80"
-  #   depends_on:
-  #     - backend
-  #   environment:
-  #     - VITE_CLERK_PUBLISHABLE_KEY=${VITE_CLERK_PUBLISHABLE_KEY}
-  #     - VITE_API_URL=${VITE_API_URL}
-  #   volumes:
-  #     - ./PicProject.Frontend/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+  frontend:
+    build:
+      context: ./LGC.Frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    volumes:
+      - ./LGC.Frontend/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
 
   backend:
     build:

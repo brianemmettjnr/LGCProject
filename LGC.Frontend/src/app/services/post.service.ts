@@ -8,19 +8,21 @@ import { CommentDto, Comment } from '../models/comment';
   providedIn: 'root',
 })
 export class PostService {
+  private baseUrl: string;
+
+  constructor(private http: HttpClient) {
+    this.baseUrl = (window as any).__env?.apiUrl || 'http://localhost:8080/api';
+  }
+
   getPosts(): Observable<Post[]> {
-    return this.http.get<Post[]>('http://localhost:8080/api/Post');
+    return this.http.get<Post[]>(`${this.baseUrl}/Post`);
   }
 
   createPost(post: PostDto): Observable<Post> {
-    return this.http.post<Post>('http://localhost:8080/api/Post', post);
+    return this.http.post<Post>(`${this.baseUrl}/Post`, post);
   }
 
   createComment(comment: CommentDto): Observable<Comment> {
-    return this.http.post<Comment>(
-      'http://localhost:8080/api/Comment',
-      comment
-    );
+    return this.http.post<Comment>(`${this.baseUrl}/Comment`, comment);
   }
-  constructor(private http: HttpClient) {}
 }
