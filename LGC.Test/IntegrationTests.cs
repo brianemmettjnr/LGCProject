@@ -47,15 +47,9 @@ public class IntegrationTests : IAsyncLifetime
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         await context.Database.EnsureCreatedAsync();
 
-        if (!await context.Users.AnyAsync(u => u.Id == 1))
-        {
-            context.Users.Add(new User { Id = 1, Username = "TestUser" });
-            await context.SaveChangesAsync();
-        }
-
         if (!await context.Posts.AnyAsync(p => p.Id == 1))
         {
-            context.Posts.Add(new Post { Title = "Test Post", Text = "Test Post Text", UserId = 1 });
+            context.Posts.Add(new Post { Title = "Test Post", Text = "Test Post Text" });
             await context.SaveChangesAsync();
         }
     }
@@ -71,7 +65,7 @@ public class IntegrationTests : IAsyncLifetime
     {
         using var scope = _serviceProvider.CreateScope();
         var postService = scope.ServiceProvider.GetRequiredService<IPostService>();
-        var postDto = new PostDto { Title = "Integration Test", Text = "Integration Test Text", UserId = 1 };
+        var postDto = new PostDto { Title = "Integration Test", Text = "Integration Test Text" };
 
         var post = await postService.CreatePostAsync(postDto);
 
@@ -84,7 +78,7 @@ public class IntegrationTests : IAsyncLifetime
     {
         using var scope = _serviceProvider.CreateScope();
         var commentService = scope.ServiceProvider.GetRequiredService<ICommentService>();
-        var commentDto = new CommentDto { PostId = 1, UserId = 1, Text = "Integration Test Comment" };
+        var commentDto = new CommentDto { PostId = 1, Text = "Integration Test Comment" };
 
         var comment = await commentService.CreateCommentAsync(commentDto);
 

@@ -13,7 +13,6 @@ namespace LGC.Data
         public MappingProfile()
         {
             CreateMap<Post, PostDto>().ReverseMap(); ;
-            CreateMap<User, UserDto>().ReverseMap(); ;
             CreateMap<Comment, CommentDto>().ReverseMap();
         }
     }

@@ -17,14 +17,11 @@ public class UnitTests
         {
             Title = "Sample Title",
             Text = "Sample Text",
-            UserId = 1
         };
         var post = new Post
         {
             Title = "Sample Title",
             Text = "Sample Text",
-            UserId = 1,
-            User = new User { Username = "SampleUsername" }
         };
         mockPostService.Setup(service => service.CreatePostAsync(postDto)).ReturnsAsync(post);
 
@@ -45,8 +42,6 @@ public class UnitTests
         {
             Title = "Sample Title",
             Text = "Sample Text",
-            UserId = 1,
-            User = new User { Username = "SampleUsername" }
         };
         mockPostService.Setup(service => service.GetPostByIdAsync(postId)).ReturnsAsync(post);
 
@@ -65,13 +60,11 @@ public class UnitTests
         var commentDto = new CommentDto
         {
             PostId = 1,
-            UserId = 1,
             Text = "Sample Comment Text"
         };
         var comment = new Comment
         {
             Text = "Sample Comment Text",
-            User = new User { Username = "SampleUsername" }
         };
         mockCommentService.Setup(service => service.CreateCommentAsync(commentDto)).ReturnsAsync(comment);
 
@@ -91,7 +84,6 @@ public class UnitTests
         var comment = new Comment
         {
             Text = "Sample Comment Text",
-            User = new User { Username = "SampleUsername" }
         };
         mockCommentService.Setup(service => service.GetCommentByIdAsync(commentId)).ReturnsAsync(comment);
 

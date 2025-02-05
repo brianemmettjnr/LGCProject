@@ -26,7 +26,7 @@ namespace LGC.Domain.Services.Implementations
             var comment = _mapper.Map<CommentDto, Comment>(commentDto);
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
-            return _context.Comments.Include(x => x.User).FirstOrDefault(c => c.Id == comment.Id) ?? throw new Exception("Comment not found");
+            return _context.Comments.FirstOrDefault(c => c.Id == comment.Id) ?? throw new Exception("Comment not found");
         }
 
         public Task<List<Comment>> GetCommentsByTripIdAsync(int postId)
@@ -35,7 +35,7 @@ namespace LGC.Domain.Services.Implementations
         }
         public Task<List<Comment>> GetAllCommentsAsync()
         {
-            return _context.Comments.Include(x => x.User).ToListAsync();
+            return _context.Comments.ToListAsync();
         }
         public Task<Comment?> GetCommentByIdAsync(int id)
         {

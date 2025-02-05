@@ -45,10 +45,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
         <mat-card-header>
           <mat-card-title
             style="display: flex; flex-direction: row; justify-content: space-between;"
-            ><div>{{ post.title }}</div>
-            <div>{{ '@' + post.user.username }}</div></mat-card-title
+            ><div>{{ post.title }}</div></mat-card-title
           >
-          <mat-card-subtitle>{{ '@' + post.user.username }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           {{ post.text }}
@@ -56,14 +54,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
             style="display: flex; flex-direction: column; gap: 5px; margin-top: 10px; margin-bottom: 10px; max-height: 200px; overflow-y: auto; padding: 1px 0px 1px 0px"
           >
             @for(comment of post.comments; track comment) {
-            <mat-card class="post-card">
-              <mat-card-content style="display: flex;">
-                <mat-icon>person</mat-icon
-                >{{
-                  ':' + comment.user.username + ' - ' + comment.text
-                }}</mat-card-content
-              >
-            </mat-card>
+            <mat-card class="post-card"> </mat-card>
             }
           </div>
           <form style="display: flex; flex-direction: row; gap: 5px;">
@@ -125,7 +116,6 @@ export class PostListComponent implements OnInit {
     const newPost: PostDto = {
       title: this.title.value ?? '',
       text: this.text.value ?? '',
-      userId: 1,
     };
     this.postService.createPost(newPost).subscribe(
       (post) => {
@@ -143,7 +133,6 @@ export class PostListComponent implements OnInit {
     const comment: CommentDto = {
       text: this.comment.value ?? '',
       postId: postId,
-      userId: 1,
     };
     this.postService.createComment(comment).subscribe(
       (comment) => {

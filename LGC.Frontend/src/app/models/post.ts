@@ -1,4 +1,3 @@
-import { User } from './user';
 import { Comment } from './comment';
 
 export interface Post {
@@ -7,11 +6,9 @@ export interface Post {
   text: string;
   createdDate: Date;
   comments: Comment[];
-  user: User;
 }
 
 export interface PostDto {
   title: string;
   text: string;
-  userId: number;
 }
