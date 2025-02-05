@@ -22,8 +22,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { merge } from 'rxjs';
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-
   imports: [
     MatFormFieldModule,
     MatInputModule,

@@ -46,7 +46,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     >
       No Posts To Display
     </div>
-    } } @else {
+    } } @else if (error === true) {
+    <div
+      style="display: flex; justify-content: center; align-items: center; height: 50vh;"
+    >
+      An Error Occurred, Check if the API is running.
+    </div>
+    }@else {
     <div
       style="display: flex; justify-content: center; align-items: center; height: 50vh;"
     >
@@ -78,7 +84,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 export class PostListComponent implements OnInit {
   posts?: Post[] = undefined;
   comment = new FormControl('');
-  protected readonly value = signal('');
+  error = false;
   constructor(private postService: PostService) {}
 
   ngOnInit() {
@@ -86,12 +92,13 @@ export class PostListComponent implements OnInit {
   }
 
   loadPosts() {
-    this.postService.getPosts().subscribe((posts) => {
-      this.posts = posts;
-    });
-  }
-
-  protected onInput(event: Event) {
-    this.value.set((event.target as HTMLInputElement).value);
+    this.postService.getPosts().subscribe(
+      (posts) => {
+        this.posts = posts;
+      },
+      (error) => {
+        this.error = true;
+      }
+    );
   }
 }
