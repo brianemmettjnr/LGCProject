@@ -11,71 +11,52 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommentDto } from '../../../models/comment';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 @Component({
   selector: 'app-post-list',
   template: `
+    @if(posts) { @if (posts.length > 0) {
     <div class="container">
-      <mat-expansion-panel hideToggle>
-        <mat-expansion-panel-header>
-          <mat-panel-title> Click Here to Post</mat-panel-title>
-        </mat-expansion-panel-header>
-        <form style="display: flex; flex-direction: row; gap: 5px;">
-          <mat-form-field style="flex: 1;">
-            <mat-label>Title</mat-label>
-            <input matInput [formControl]="title" />
-          </mat-form-field>
-          <mat-form-field style="flex: 1;">
-            <mat-label>Text</mat-label>
-            <textarea
-              [formControl]="text"
-              matInput
-              placeholder="Ex. 100 Main St"
-            ></textarea>
-          </mat-form-field>
-          <button mat-fab (click)="submitPost()">
-            <mat-icon>send</mat-icon>
-          </button>
-        </form>
-      </mat-expansion-panel>
-    </div>
-    <div class="container">
-      @for(post of posts; track post.title) {
-      <mat-card class="post-card">
+      @for(post of posts; track post.id) {
+      <mat-card
+        class="post-card"
+        [routerLink]="['/posts', post.id]"
+        style="cursor: pointer;"
+      >
         <mat-card-header>
           <mat-card-title
             style="display: flex; flex-direction: row; justify-content: space-between;"
-            ><div>{{ post.title }}</div></mat-card-title
+            ><div
+              style="display: flex; align-items: center; gap: 5px; justify-content: space-between;"
+            >
+              <div style="width:65vw;">{{ post.title }}</div>
+              <mat-icon>comment</mat-icon>{{ post.comments.length }}
+            </div></mat-card-title
           >
         </mat-card-header>
-        <mat-card-content>
-          {{ post.text }}
-          <div
-            style="display: flex; flex-direction: column; gap: 5px; margin-top: 10px; margin-bottom: 10px; max-height: 200px; overflow-y: auto; padding: 1px 0px 1px 0px"
-          >
-            @for(comment of post.comments; track comment) {
-            <mat-card class="post-card"> </mat-card>
-            }
-          </div>
-          <form style="display: flex; flex-direction: row; gap: 5px;">
-            <mat-form-field style="flex: 1;">
-              <mat-label>Comment?</mat-label>
-              <input [formControl]="comment" matInput />
-            </mat-form-field>
-
-            <button mat-fab (click)="submitComment(post.id)">
-              <mat-icon>send</mat-icon>
-            </button>
-          </form>
-        </mat-card-content>
+        <mat-card-content></mat-card-content>
       </mat-card>
       }
     </div>
+    } @else {
+    <div
+      style="display: flex; justify-content: center; align-items: center; height: 50vh;"
+    >
+      No Posts To Display
+    </div>
+    } } @else {
+    <div
+      style="display: flex; justify-content: center; align-items: center; height: 50vh;"
+    >
+      <mat-spinner />
+    </div>
+    }
   `,
   styles: [
     `
       .container {
-        padding: 20px;
         display: grid;
         gap: 20px;
       }
@@ -91,13 +72,11 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     MatExpansionModule,
     ReactiveFormsModule,
     FormsModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class PostListComponent implements OnInit {
-  private _snackBar = inject(MatSnackBar);
-  posts: Post[] = [];
-  text = new FormControl('');
-  title = new FormControl('');
+  posts?: Post[] = undefined;
   comment = new FormControl('');
   protected readonly value = signal('');
   constructor(private postService: PostService) {}
@@ -110,41 +89,6 @@ export class PostListComponent implements OnInit {
     this.postService.getPosts().subscribe((posts) => {
       this.posts = posts;
     });
-  }
-
-  submitPost() {
-    const newPost: PostDto = {
-      title: this.title.value ?? '',
-      text: this.text.value ?? '',
-    };
-    this.postService.createPost(newPost).subscribe(
-      (post) => {
-        this.title.setValue('');
-        this.text.setValue('');
-        this.posts.push(post);
-      },
-      (error) => {
-        this._snackBar.open(error);
-      }
-    );
-  }
-
-  submitComment(postId: number) {
-    const comment: CommentDto = {
-      text: this.comment.value ?? '',
-      postId: postId,
-    };
-    this.postService.createComment(comment).subscribe(
-      (comment) => {
-        this.comment.setValue('');
-        this.posts
-          .filter((post) => post.id === postId)[0]
-          .comments.push(comment);
-      },
-      (error) => {
-        this._snackBar.open(error);
-      }
-    );
   }
 
   protected onInput(event: Event) {

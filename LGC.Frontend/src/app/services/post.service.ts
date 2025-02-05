@@ -18,6 +18,10 @@ export class PostService {
     return this.http.get<Post[]>(`${this.baseUrl}/Post`);
   }
 
+  getPostById(id: number): Observable<Post> {
+    return this.http.get<Post>(`${this.baseUrl}/Post/${id}`);
+  }
+
   createPost(post: PostDto): Observable<Post> {
     return this.http.post<Post>(`${this.baseUrl}/Post`, post);
   }
