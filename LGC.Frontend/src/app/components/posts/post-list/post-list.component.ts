@@ -21,11 +21,7 @@ import { CommonModule } from '@angular/common';
     @if(posts) { @if (posts.length > 0) {
     <div class="container">
       @for(post of posts; track post.id) {
-      <mat-card
-        class="post-card"
-        [routerLink]="['/posts', post.id]"
-        style="cursor: pointer;"
-      >
+      <mat-card [routerLink]="['/posts', post.id]" style="cursor: pointer;">
         <mat-card-header>
           <mat-card-title
             style="display: flex; flex-direction: row; justify-content: space-between;"

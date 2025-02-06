@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-layout-header',
-  template: `<nav class="navbar navbar-light" style="margin-bottom: 20px;">
+  template: `<nav style="margin-bottom: 20px;">
     <div
       style="display: flex; justify-content: space-between; align-items: center;"
     >

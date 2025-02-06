@@ -43,7 +43,7 @@ import { CommonModule } from '@angular/common';
     MatProgressSpinnerModule,
     CommonModule,
   ],
-  template: `@if(post) {<mat-card class="post-card">
+  template: `@if(post) {<mat-card>
       <mat-card-header>
         <mat-card-title
           style="display: flex; flex-direction: row; justify-content: space-between;"
@@ -56,7 +56,7 @@ import { CommonModule } from '@angular/common';
           style="display: flex; flex-direction: column; gap: 5px; margin-top: 10px; margin-bottom: 10px; max-height: 200px; overflow-y: auto; padding: 2px 0px 2px 0px"
         >
           @for(comment of post.comments; track comment.id) {
-          <mat-card class="post-card">
+          <mat-card>
             <mat-card-content
               style="align-items: center;
                     display: flex
