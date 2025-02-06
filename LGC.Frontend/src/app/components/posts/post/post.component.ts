@@ -25,6 +25,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-post',
@@ -40,6 +41,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     ReactiveFormsModule,
     FormsModule,
     MatProgressSpinnerModule,
+    CommonModule,
   ],
   template: `@if(post) {<mat-card class="post-card">
       <mat-card-header>
@@ -59,7 +61,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
               style="align-items: center;
                     display: flex
                 ;"
-              ><mat-icon>person</mat-icon> : {{ comment.text }}
+              ><mat-icon>person</mat-icon>
+              <div style="display: flex; align-items: center; gap: 5px;">
+                {{ '@' }}
+                {{ post.createdAt | date : 'dd/MM/yyyy' }}
+              </div>
+              : {{ comment.text }}
             </mat-card-content></mat-card
           >
           }

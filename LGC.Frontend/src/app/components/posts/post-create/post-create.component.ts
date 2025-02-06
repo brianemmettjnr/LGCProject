@@ -21,6 +21,7 @@ import { PostService } from '../../../services/post.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { merge } from 'rxjs';
+import { Router } from '@angular/router';
 @Component({
   imports: [
     MatFormFieldModule,
@@ -71,6 +72,8 @@ export class PostCreateComponent {
       .subscribe(() => this.updateErrorMessage());
   }
   private _snackBar = inject(MatSnackBar);
+  public router = inject(Router);
+
   errorMessage = signal('');
 
   text = new FormControl('', {
@@ -100,7 +103,7 @@ export class PostCreateComponent {
         this.title.setValue('');
         this.text.setValue('');
         this._snackBar.open('Post Created Sucessfully! 🎉');
-        window.location.href = '/posts/' + post.id;
+        this.router.navigate(['/posts', post.id]);
       },
       (error) => {
         this._snackBar.open(error);

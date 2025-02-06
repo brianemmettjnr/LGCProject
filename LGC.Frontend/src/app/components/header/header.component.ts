@@ -9,7 +9,14 @@ import { RouterLink } from '@angular/router';
     <div
       style="display: flex; justify-content: space-between; align-items: center;"
     >
-      <h1 style="cursor: pointer;" [routerLink]="['/posts']">Forum-It</h1>
+      <div
+        style="display: flex; flex-direction: row; align-items: center; gap: 20px"
+      >
+        <h1 style="cursor: pointer;" [routerLink]="['/posts']">Forum-It</h1>
+        <button (click)="toggleTheme()" mat-fab>
+          <mat-icon>brightness_6</mat-icon>
+        </button>
+      </div>
       @if (!isCreatePage()) {
       <button [routerLink]="['posts/create']" mat-fab extended>
         Create Post <mat-icon>create</mat-icon></button
@@ -24,5 +31,9 @@ export class HeaderComponent {
 
   isCreatePage(): boolean {
     return this.router.url === '/posts/create';
+  }
+
+  toggleTheme() {
+    document.body.classList.toggle('dark-mode');
   }
 }

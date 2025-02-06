@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import "@angular/material/prebuilt-themes/azure-blue.css";
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
 html,
 body {
   height: 100%;
@@ -8,3 +8,11 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+body.dark-mode {
+  background-color: #4d4848;
+  color: #ffffff;
+  --mdc-elevated-card-container-color: #25252560;
+}
+
+/* Add any other styles you want to change in dark mode */

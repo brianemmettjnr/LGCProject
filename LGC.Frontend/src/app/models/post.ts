@@ -4,7 +4,7 @@ export interface Post {
   id: number;
   title: string;
   text: string;
-  createdDate: Date;
+  createdAt: Date;
   comments: Comment[];
 }
 

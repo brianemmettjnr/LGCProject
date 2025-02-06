@@ -13,6 +13,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommentDto } from '../../../models/comment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-post-list',
@@ -29,9 +30,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
           <mat-card-title
             style="display: flex; flex-direction: row; justify-content: space-between;"
             ><div
-              style="display: flex; align-items: center; gap: 5px; justify-content: space-between;"
+              style="display: flex; align-items: center; gap: 5px; justify-content: space-between; flex:1"
             >
-              <div style="width:65vw;">{{ post.title }}</div>
+              <div style="flex: 1">{{ post.title }}</div>
+              <div style="display: flex; align-items: center; gap: 5px;">
+                <mat-icon>access_time</mat-icon
+                >{{ post.createdAt | date : 'dd/MM/yyyy' }}
+              </div>
               <mat-icon>comment</mat-icon>{{ post.comments.length }}
             </div></mat-card-title
           >
@@ -67,6 +72,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         gap: 20px;
       }
     `,
+    ' :host ::ng-deep .mat-mdc-card-header-text {flex: 1}',
   ],
   imports: [
     RouterModule,
@@ -79,7 +85,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ReactiveFormsModule,
     FormsModule,
     MatProgressSpinnerModule,
+    CommonModule,
   ],
+  providers: [],
 })
 export class PostListComponent implements OnInit {
   posts?: Post[] = undefined;
