@@ -102,7 +102,9 @@ export class PostCreateComponent {
       (post) => {
         this.title.setValue('');
         this.text.setValue('');
-        this._snackBar.open('Post Created Sucessfully! 🎉');
+        this._snackBar.open('Post Created Sucessfully! 🎉', '', {
+          duration: 5000,
+        });
         this.router.navigate(['/posts', post.id]);
       },
       (error) => {

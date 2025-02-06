@@ -150,7 +150,9 @@ export class PostComponent implements OnInit {
         this.post?.comments.push(comment);
       },
       (error) => {
-        this._snackBar.open(error);
+        this._snackBar.open(error, '', {
+          duration: 5000,
+        });
       }
     );
   }
